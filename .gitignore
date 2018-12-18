@@ -12,6 +12,12 @@ package-lock.json
 # production
 /build
 
+#all css files are dynamically compiled by less
+src/css
+
+# VSCode
+.vscode
+
 # misc
 .DS_Store
 .env.local
