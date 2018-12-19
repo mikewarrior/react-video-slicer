@@ -8,7 +8,11 @@ class PlaylistQueue extends Component {
   }
   render() {
     return (
-      <div className="playlist-queue" ></div>
+      <div className="playlist-queue" >
+        <ul id="playlist">
+          <li id="full-video"> Full Video</li>
+        </ul>
+      </div>
      );
   }
 }

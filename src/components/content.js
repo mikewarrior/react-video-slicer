@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Video from './video';
+import PlaylistQueue from './playlist-queue';
 
 
 class Content extends Component {
@@ -11,6 +12,7 @@ class Content extends Component {
     return (
       <div className="main-content">
         <Video />
+        <PlaylistQueue />
       </div>
     );
   }
