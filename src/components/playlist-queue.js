@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Modal from 'react-responsive-modal';
 
 
 class PlaylistQueue extends Component {
@@ -11,7 +12,8 @@ class PlaylistQueue extends Component {
         { name: 'Middle', startTime: 20, endTime: 30 },
         { name: 'Ending', startTime: 40, endTime: 50 }
       ],
-      videoIndex: this.props.videoIndex || 0
+      videoIndex: this.props.videoIndex || 0,
+      openModal: false,
     }
   }
 
@@ -19,6 +21,14 @@ class PlaylistQueue extends Component {
     if (prevProps.videoIndex !== this.props.videoIndex) {
       this.setState({ videoIndex: this.props.videoIndex })
     }
+  }
+
+  addNewClip = () => {
+    this.setState({ openModal: true });
+  }
+
+  onCloseModal = () => {
+    this.setState({ openModal: false });
   }
 
   onDeleteVideo = (event) => {
@@ -73,10 +83,45 @@ class PlaylistQueue extends Component {
   render() {
     return (
       <div className="playlist-queue" >
-        <h3>All your Videos</h3>
+        <h3 style={{ textAlign: 'center', color: 'black', font: 'status-bar' }} >All your Videos</h3>
+        <button title="Add Clip" className="btn-add" onClick={this.addNewClip} />
         <div id="playlist" className="collection">
           {this.renderPlaylistClips()}
         </div>
+        <Modal styles={{ modal: { width: '400px' } }} open={this.state.openModal} onClose={this.onCloseModal} center>
+          <div className="modal-header" >
+            <h4 className="modal-title edit" id="myModalLabel">Add new clip</h4>
+          </div>
+          <div className="modal-body">
+            <form className="form-horizontal">
+              <div className="col-xs-10">
+                <input
+                  placeholder="Name your clip"
+                  name="Name"
+                  className="form-control"
+                  type="text"
+                />
+              </div>
+              <div className="col-xs-10">
+                <input
+                  placeholder="Start time in seconds"
+                  name="Name"
+                  className="form-control"
+                  type="text"
+                />
+              </div>
+              <div className="col-xs-10">
+                <input
+                  placeholder="End time in seconds"
+                  name="Name"
+                  className="form-control"
+                  type="text"
+                />
+              </div>
+              <button className="btn btn-green" id="save_template_btn" onClick={this.onClickSaveButton} type="button" style={{marginTop: '8px'}} >Add Clip</button>
+            </form>
+          </div>
+        </Modal>
       </div>
     );
   }

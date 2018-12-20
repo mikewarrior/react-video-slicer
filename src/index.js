@@ -4,8 +4,10 @@ import Home from './components/home'
 import * as serviceWorker from './serviceWorker';
 
 //Import CSS files
+import './css/buttons.css';
 import './css/header.css';
 import './css/home.css';
+import './css/modals.css';
 import './css/playlist.css';
 
 ReactDOM.render(<Home />, document.getElementById('root'));
