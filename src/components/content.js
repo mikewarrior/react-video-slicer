@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Video from './video';
-import PlaylistQueue from './playlist-queue';
+import VideoWrapper from './video-wrapper';
 
 
 class Content extends Component {
@@ -11,8 +10,7 @@ class Content extends Component {
   render() {
     return (
       <div className="main-content">
-        <Video />
-        <PlaylistQueue />
+        <VideoWrapper/>
       </div>
     );
   }
