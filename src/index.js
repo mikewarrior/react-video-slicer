@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 //Import CSS files
 import './css/header.css';
 import './css/home.css';
+import './css/playlist.css';
 
 ReactDOM.render(<Home />, document.getElementById('root'));
 

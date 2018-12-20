@@ -7,34 +7,40 @@ class PlaylistQueue extends Component {
     this.state = {
       clips: [
         { name: 'Full Video' },
-        { name: 'Beginning', startTime: 0, endTime: 10 }
+        { name: 'Beginning', startTime: 0, endTime: 10 },
+        { name: 'Middle', startTime: 20, endTime: 30 },
+        { name: 'Ending', startTime: 40, endTime: 50 }
       ],
-      timeframe: ''
+      videoIndex: this.props.videoIndex || 0
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.videoIndex !== this.props.videoIndex) {
+      this.setState({videoIndex: this.props.videoIndex})
     }
   }
 
   renderPlaylistClips = () => {
     const clips = this.state.clips || [];
-
     return clips.map((clip, index) => {
       return (
-        <li key={index}
-          id={clip.name}
+        <span key={index}
+          id={index}
+          className={`collection-item ${clips[this.state.videoIndex] === clip ? 'active' : ''}`}
           name={clip.startTime !== undefined ? `${clip.startTime},${clip.endTime}` : ''}
           onClick={this.props.onClick}
-        >{clip.name}</li>
+        >{clip.name}{clip.startTime !== undefined ? ` - ${clip.startTime} s  to ${clip.endTime} s` : ''}</span>
       );
     });
   }
 
-
-
   render() {
     return (
       <div className="playlist-queue" >
-        <ul id="playlist">
+        <div id="playlist" className="collection">
           {this.renderPlaylistClips()}
-        </ul>
+        </div>
       </div>
     );
   }
