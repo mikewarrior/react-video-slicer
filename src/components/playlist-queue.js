@@ -14,6 +14,9 @@ class PlaylistQueue extends Component {
       ],
       videoIndex: this.props.videoIndex || 0,
       openModal: false,
+      videoName: '',
+      startTime: '',
+      endTime: ''
     }
   }
 
@@ -29,6 +32,26 @@ class PlaylistQueue extends Component {
 
   onCloseModal = () => {
     this.setState({ openModal: false });
+  }
+
+  onChange = (event) => {
+    let state = this.state;
+    state[event.target.name] = event.target.value;
+    this.setState(state);
+  }
+
+  saveVideo = (event) => {
+    event.preventDefault();
+    let state = this.state;
+    const newVideo = {
+      name: state.videoName,
+      startTime: state.startTime,
+      endTime: state.endTime
+    }
+    state.clips.push(newVideo);
+    this.setState(state, () => {
+      this.onCloseModal();
+    });
   }
 
   onDeleteVideo = (event) => {
@@ -97,28 +120,34 @@ class PlaylistQueue extends Component {
               <div className="col-xs-10">
                 <input
                   placeholder="Name your clip"
-                  name="Name"
+                  name="videoName"
                   className="form-control"
                   type="text"
+                  onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="col-xs-10">
                 <input
                   placeholder="Start time in seconds"
-                  name="Name"
+                  name="startTime"
                   className="form-control"
                   type="text"
+                  onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="col-xs-10">
                 <input
                   placeholder="End time in seconds"
-                  name="Name"
+                  name="endTime"
                   className="form-control"
                   type="text"
+                  onChange={this.onChange}
+                  required
                 />
               </div>
-              <button className="btn btn-green" id="save_template_btn" onClick={this.onClickSaveButton} type="button" style={{marginTop: '8px'}} >Add Clip</button>
+              <button className="btn btn-green" id="save_template_btn" onClick={this.saveVideo} type="submit" style={{ marginTop: '8px' }} >Add Clip</button>
             </form>
           </div>
         </Modal>
