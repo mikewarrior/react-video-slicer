@@ -1,10 +1,10 @@
 # `Welcome to VideoSlicer App`
 
-This is an example app to show the use of HTML5 video on React and HTML5 video fragments.
+This is an example app to show the use of HTML5 video on [ReactJS](https://reactjs.org/) and HTML5 video fragments.
 
 ## `Dependencies`
 
-To be able to execute this app you need NodeJS and NPM installed in you machine.
+To be able to execute this app you will need [NodeJS](https://nodejs.org/en/) and [NPM](https://www.npmjs.com/) installed in your machine.
 
 ## `Setting up the app`
 
