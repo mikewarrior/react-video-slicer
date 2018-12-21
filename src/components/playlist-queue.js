@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Mousetrap from 'mousetrap';
 
 
 class PlaylistQueue extends Component {
@@ -22,6 +23,16 @@ class PlaylistQueue extends Component {
       isUpdate: false,
       selectedVideo: ''
     }
+  }
+
+  componentDidMount() {
+    Mousetrap.bind('alt+n', this.playNextVideo);
+    Mousetrap.bind('alt+p', this.playPreviousVideo);
+  }
+
+  componentWillUnmount() {
+    Mousetrap.unbind('alt+n', this.playNextVideo);
+    Mousetrap.unbind('alt+p', this.playPreviousVideo);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -92,9 +103,10 @@ class PlaylistQueue extends Component {
   playPreviousVideo = (event) => {
     let state = this.state;
     event.preventDefault();
-    if (state.videoIndex !== 0) {
-      let previousVideo = document.getElementById(parseInt(state.videoIndex, 10) - 1);
-      state.videoIndex = parseInt(state.videoIndex, 10) - 1;
+    const currentIndex = parseInt(state.videoIndex, 10);
+    if (currentIndex !== 0) {
+      let previousVideo = document.getElementById(currentIndex - 1);
+      state.videoIndex = currentIndex - 1;
       this.setState(state, () => {
         previousVideo.click();
       });
@@ -104,9 +116,10 @@ class PlaylistQueue extends Component {
   playNextVideo = (event) => {
     let state = this.state;
     event.preventDefault();
-    if ((state.clips.length - 1) !== state.videoIndex) {
-      let nextVideo = document.getElementById(parseInt(state.videoIndex, 10) + 1);
-      state.videoIndex = parseInt(state.videoIndex, 10) + 1;
+    const currentIndex = parseInt(state.videoIndex, 10);
+    if ((state.clips.length - 1) !== currentIndex) {
+      let nextVideo = document.getElementById(currentIndex + 1);
+      state.videoIndex = currentIndex + 1;
       this.setState(state, () => {
         nextVideo.click();
       });
