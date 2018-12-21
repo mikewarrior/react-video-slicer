@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 
 class PlaylistQueue extends Component {
@@ -87,6 +89,29 @@ class PlaylistQueue extends Component {
     state.clips.splice(id, 1);
     this.setState({ clips: state.clips });
   }
+  playPreviousVideo = (event) => {
+    let state = this.state;
+    event.preventDefault();
+    if (state.videoIndex !== 0) {
+      let previousVideo = document.getElementById(parseInt(state.videoIndex, 10) - 1);
+      state.videoIndex = parseInt(state.videoIndex, 10) - 1;
+      this.setState(state, () => {
+        previousVideo.click();
+      });
+    }
+  }
+
+  playNextVideo = (event) => {
+    let state = this.state;
+    event.preventDefault();
+    if ((state.clips.length - 1) !== state.videoIndex) {
+      let nextVideo = document.getElementById(parseInt(state.videoIndex, 10) + 1);
+      state.videoIndex = parseInt(state.videoIndex, 10) + 1;
+      this.setState(state, () => {
+        nextVideo.click();
+      });
+    }
+  }
 
   renderPlaylistClips = () => {
     const clips = this.state.clips || [];
@@ -134,6 +159,16 @@ class PlaylistQueue extends Component {
       <div className="playlist-queue" >
         <h3 style={{ textAlign: 'center', color: 'black', font: 'status-bar' }} >All your Videos</h3>
         <button title="Add Clip" className="btn-add" onClick={this.addNewClip} />
+        <FontAwesomeIcon title="Previous Video | Alt+P"
+          icon={faCaretLeft}
+          size="2x"
+          style={{ marginLeft: '20px', marginRight: '10px' }}
+          onClick={this.playPreviousVideo}
+        />
+        <FontAwesomeIcon title="Previous Next | Alt+N"
+          icon={faCaretRight} size="2x"
+          onClick={this.playNextVideo}
+        />
         <div id="playlist" className="collection">
           {this.renderPlaylistClips()}
         </div>
