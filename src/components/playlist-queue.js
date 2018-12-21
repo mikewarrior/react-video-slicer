@@ -16,7 +16,9 @@ class PlaylistQueue extends Component {
       openModal: false,
       videoName: '',
       startTime: '',
-      endTime: ''
+      endTime: '',
+      isUpdate: false,
+      selectedVideo: ''
     }
   }
 
@@ -27,7 +29,14 @@ class PlaylistQueue extends Component {
   }
 
   addNewClip = () => {
-    this.setState({ openModal: true });
+    let state = this.state;
+    state.videoName = '';
+    state.startTime = '';
+    state.endTime = '';
+    state.isUpdate = false;
+    state.selectedVideo = '';
+    state.openModal = true;
+    this.setState(state);
   }
 
   onCloseModal = () => {
@@ -48,10 +57,27 @@ class PlaylistQueue extends Component {
       startTime: state.startTime,
       endTime: state.endTime
     }
-    state.clips.push(newVideo);
+    if (!state.isUpdate) {
+      state.clips.push(newVideo);
+    } else {
+      state.clips[parseInt(state.selectedVideo, 10)] = newVideo;
+    }
     this.setState(state, () => {
       this.onCloseModal();
     });
+  }
+
+  onEditVideo = (event) => {
+    event.preventDefault();
+    let state = this.state;
+    state.isUpdate = true;
+    state.openModal = true;
+    const videoToEdit = state.clips[parseInt(event.target.name, 10)];
+    state.videoName = videoToEdit.name;
+    state.startTime = videoToEdit.startTime;
+    state.endTime = videoToEdit.endTime;
+    state.selectedVideo = event.target.name;
+    this.setState(state);
   }
 
   onDeleteVideo = (event) => {
@@ -88,7 +114,7 @@ class PlaylistQueue extends Component {
               className="btn-edit"
               name={index}
               type="button"
-              onClick={this.onDeleteVideo}
+              onClick={this.onEditVideo}
             />
             <button
               title="Delete"
@@ -124,6 +150,7 @@ class PlaylistQueue extends Component {
                   className="form-control"
                   type="text"
                   onChange={this.onChange}
+                  value={this.state.videoName}
                   required
                 />
               </div>
@@ -134,6 +161,7 @@ class PlaylistQueue extends Component {
                   className="form-control"
                   type="text"
                   onChange={this.onChange}
+                  value={this.state.startTime}
                   required
                 />
               </div>
@@ -144,6 +172,7 @@ class PlaylistQueue extends Component {
                   className="form-control"
                   type="text"
                   onChange={this.onChange}
+                  value={this.state.endTime}
                   required
                 />
               </div>
